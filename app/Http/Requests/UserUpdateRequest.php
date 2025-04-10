@@ -19,7 +19,7 @@ class UserUpdateRequest extends FormRequest
 
         return [
             'name' => 'required|string|max:255',
-            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($userId)],
+            'email' => 'required|email|unique:users,email,' . $this->id,
             'password' => 'nullable|string|min:8|confirmed',
             'departement' => ['required', Rule::in($this->getEnumValues('users', 'departement'))],
             'education' => ['required', Rule::in($this->getEnumValues('users', 'education'))],
@@ -27,7 +27,7 @@ class UserUpdateRequest extends FormRequest
             'rank' => ['required', Rule::in($this->getEnumValues('users', 'rank'))],
             'eselon' => ['required', Rule::in($this->getEnumValues('users', 'eselon'))],
             'position' => ['required', Rule::in($this->getEnumValues('users', 'position'))],
-            'nip' => ['required', 'numeric', 'digits_between:10,19', Rule::unique('users', 'nip')->ignore($userId)],
+            'nip' => 'required|string|size:18|unique:users,nip,' . $this->id,
             'tanggal_lahir' => 'required|date',
             'telepon' => 'required|numeric|digits_between:10,19',
             'level' => 'required|integer|min:1',
@@ -41,8 +41,15 @@ class UserUpdateRequest extends FormRequest
 
     private function getEnumValues($table, $column)
     {
-        $enumValues = DB::select("SHOW COLUMNS FROM $table WHERE Field = ?", [$column]);
-        preg_match("/^enum\((.*)\)$/", $enumValues[0]->Type, $matches);
-        return explode(",", str_replace("'", "", $matches[1]));
+        $type = DB::select("SHOW COLUMNS FROM {$table} WHERE Field = '{$column}'")[0]->Type;
+        preg_match('/^enum\((.*)\)$/', $type, $matches);
+        $enum = [];
+        foreach (explode(',', $matches[1]) as $value) {
+            $enum[] = trim($value, "'");
+        }
+        return $enum;
     }
+
+
+
 }

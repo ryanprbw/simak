@@ -71,4 +71,16 @@ class User extends Authenticatable
             set: fn($value) => $value ? Hash::make($value) : $this->password,
         );
     }
+    public function leader()
+    {
+        return $this->belongsTo(User::class, 'leader');
+    }
+    public function isAdmin()
+    {
+        return $this->roles === 'admin' || $this->level === 'admin';
+    }
+    public function laporans()
+    {
+        return $this->hasMany(Laporan::class);
+    }
 }

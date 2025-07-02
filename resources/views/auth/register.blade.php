@@ -86,7 +86,7 @@
         <div class="mt-4">
             <x-input-label for="departement" :value="__('Departemen')" />
             <select id="departement" name="departement" class="block mt-1 w-full">
-                @foreach (['A', 'B', 'C'] as $dept)
+                @foreach (['Dinas Kependudukan dan Pencatatan Sipil', 'B', 'C'] as $dept)
                     <option value="{{ $dept }}">{{ $dept }}</option>
                 @endforeach
             </select>

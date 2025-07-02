@@ -66,7 +66,7 @@
 
     <!-- Rank -->
     <div>
-        <x-input-label for="rank" :value="__('Rank')" />
+        <x-input-label for="rank" :value="__('Kelas Jabatan')" />
         <select id="rank" name="rank"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
             @foreach (['4', '5', '6', '7', '8', '9', '10', '11', '12', '13'] as $rank)
@@ -79,7 +79,7 @@
 
     <!-- Position -->
     <div>
-        <x-input-label for="position" :value="__('Position')" />
+        <x-input-label for="position" :value="__('Posisi / Jabatan')" />
         <select id="position" name="position"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
             @foreach ($positions as $pos)
@@ -133,7 +133,7 @@
         <x-input-label for="eselon" :value="__('Eselon')" />
         <select id="eselon" name="eselon"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-            @foreach (['I', 'II', 'III'] as $level)
+            @foreach (['I', 'II', 'III', 'IV', 'Staff'] as $level)
                 <option value="{{ $level }}" {{ $user->eselon == $level ? 'selected' : '' }}>
                     {{ $level }}</option>
             @endforeach
